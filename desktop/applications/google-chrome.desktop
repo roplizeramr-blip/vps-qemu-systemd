@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Google Chrome
+Name[ar]=جوجل كروم
+Comment=Web Browser
+Comment[ar]=متصفح الويب
+Exec=google-chrome %u
+Icon=google-chrome
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true

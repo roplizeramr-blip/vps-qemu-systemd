@@ -1,0 +1,9 @@
+[Unit]
+Description=Cloud desktop (TigerVNC + noVNC + XFCE + control)
+Documentation=file:///opt/desktop/web/index.html
+Wants=vnc.service websockify.service xfce.service nginx.service control.service
+After=vnc.service websockify.service xfce.service nginx.service control.service
+AllowIsolate=yes
+
+[Install]
+WantedBy=multi-user.target

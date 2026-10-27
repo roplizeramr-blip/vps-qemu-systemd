@@ -1,0 +1,23 @@
+[Unit]
+Description=noVNC WebSocket bridge
+Documentation=https://novnc.com
+After=vnc.service network-online.target
+Requires=vnc.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=desktop
+Group=desktop
+PAMName=login
+EnvironmentFile=-/etc/cloud-desktop/desktop.env
+Environment=HOME=/home/desktop
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+ExecStart=/usr/local/bin/start-websockify.sh
+Restart=always
+RestartSec=2
+KillMode=control-group
+TimeoutStopSec=20
+
+[Install]
+WantedBy=cloud-desktop.target

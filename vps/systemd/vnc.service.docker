@@ -1,0 +1,5 @@
+[Service]
+# PAM/login sessions need a running logind + session bus, which are fragile
+# inside unprivileged/un-privileged Docker containers.  systemd still drops
+# privileges via User=/Group= below; we just skip the PAM session layer.
+PAMName=

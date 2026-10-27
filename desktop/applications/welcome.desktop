@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Welcome
+Name[ar]=مرحبًا
+Comment=Cloud desktop quick start
+Comment[ar]=دليل البدء السريع
+Exec=google-chrome file:///opt/desktop/welcome.html
+Icon=help-browser
+Terminal=false
+Categories=Utility;
+StartupNotify=true

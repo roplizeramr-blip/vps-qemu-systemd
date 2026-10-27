@@ -1,0 +1,51 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070b14"/>
+      <stop offset="0.55" stop-color="#0d1a33"/>
+      <stop offset="1" stop-color="#13284d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.55" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#2b6cb0" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#2b6cb0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#7aa2f7" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+
+  <g transform="translate(120, 150)">
+    <text x="0" y="0" fill="#e6edf7" font-family="DejaVu Sans, sans-serif" font-size="76" font-weight="700">Debian Cloud Desktop</text>
+    <text x="4" y="62" fill="#8aa4c8" font-family="DejaVu Sans, sans-serif" font-size="27">XFCE · Chrome · noVNC · systemd-compatible</text>
+    <rect x="4" y="100" width="620" height="3" rx="1.5" fill="#3b82f6" opacity="0.8"/>
+  </g>
+
+  <g transform="translate(1270, 170)" opacity="0.95">
+    <circle cx="190" cy="190" r="190" fill="none" stroke="#3b82f6" stroke-opacity="0.22" stroke-width="2"/>
+    <circle cx="190" cy="190" r="140" fill="none" stroke="#60a5fa" stroke-opacity="0.28" stroke-width="2"/>
+    <circle cx="190" cy="190" r="92" fill="#0b1628" stroke="#93c5fd" stroke-opacity="0.55" stroke-width="2"/>
+    <path d="M 190 98 L 190 282 M 98 190 L 282 190" stroke="#60a5fa" stroke-opacity="0.28" stroke-width="2"/>
+    <circle cx="190" cy="98" r="7" fill="#93c5fd"/>
+    <circle cx="282" cy="190" r="7" fill="#93c5fd"/>
+    <circle cx="190" cy="282" r="7" fill="#93c5fd"/>
+    <circle cx="98" cy="190" r="7" fill="#93c5fd"/>
+    <text x="190" y="202" text-anchor="middle" fill="#dbeafe" font-family="DejaVu Sans Mono, monospace" font-size="30">$ _</text>
+  </g>
+
+  <g transform="translate(120, 720)" opacity="0.94">
+    <rect x="0" y="0" width="820" height="250" rx="14" fill="#0a1220" stroke="#2a4a7a" stroke-width="1.5"/>
+    <rect x="0" y="0" width="820" height="38" rx="14" fill="#12233d"/>
+    <circle cx="30" cy="19" r="6" fill="#ff5f56"/>
+    <circle cx="52" cy="19" r="6" fill="#ffbd2e"/>
+    <circle cx="74" cy="19" r="6" fill="#27c93f"/>
+    <text x="30" y="82" fill="#9ece6a" font-family="DejaVu Sans Mono, monospace" font-size="21">admin@debian:~$ supervisorctl status</text>
+    <text x="30" y="116" fill="#7aa2f7" font-family="DejaVu Sans Mono, monospace" font-size="21">● service layer: active (running)</text>
+    <text x="30" y="150" fill="#bb9af7" font-family="DejaVu Sans Mono, monospace" font-size="21">● Chrome · XFCE · noVNC · D-Bus</text>
+    <text x="30" y="184" fill="#e0af68" font-family="DejaVu Sans Mono, monospace" font-size="21">admin@debian:~$ _</text>
+  </g>
+
+  <text x="120" y="1030" fill="#597699" font-family="DejaVu Sans, sans-serif" font-size="18">Lightweight cloud workstation · built for CranL</text>
+</svg>

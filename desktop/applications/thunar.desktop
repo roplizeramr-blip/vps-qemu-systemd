@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=File Manager
+Name[ar]=مدير الملفات
+Comment=Browse the file system
+Comment[ar]=تصفح نظام الملفات
+Exec=thunar
+Icon=system-file-manager
+Terminal=false
+Categories=System;FileManager;
+StartupNotify=true

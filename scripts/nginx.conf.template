@@ -1,0 +1,114 @@
+# nginx front door for the cloud desktop.
+#
+# One public port, three jobs:
+#   /status, /api/status, /healthz -> the small Python control server
+#   /                              -> noVNC (through websockify)
+#   everything else                -> noVNC static assets / the WebSocket
+#
+# nginx terminates HTTP Basic auth and proxies WebSocket natively
+# (proxy_http_version 1.1 + Upgrade/Connection), which is why the browser no
+# longer drops the connection when the desktop is idle: there is no Python
+# socket pump in the path and the read timeout is measured in days.
+#
+# Placeholders are substituted by entrypoint.sh:
+#   __PORT__ __WS_PORT__ __CONTROL_PORT__
+
+worker_processes 1;
+user www-data;
+pid /run/nginx.pid;
+error_log /var/log/nginx/error.log warn;
+
+events {
+    worker_connections 512;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log off;
+    sendfile on;
+    tcp_nopush on;
+    keepalive_timeout 65;
+    server_tokens off;
+    client_max_body_size 8m;
+
+    # Cheap compression: noVNC is ~1 MB of JavaScript/HTML and the server has
+    # two shared vCPUs, so use the fastest gzip level and only for text.
+    gzip on;
+    gzip_comp_level 2;
+    gzip_min_length 1024;
+    gzip_proxied any;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        ''      close;
+    }
+
+    upstream desktop_ws {
+        server 127.0.0.1:__WS_PORT__;
+    }
+
+    upstream control_api {
+        server 127.0.0.1:__CONTROL_PORT__;
+    }
+
+    server {
+        listen __PORT__ default_server;
+        server_name _;
+
+        # --- control page and API (no password: it exposes no screen data) ---
+        location = /healthz {
+            proxy_pass http://control_api/healthz;
+            access_log off;
+        }
+
+        location = /api/status {
+            proxy_pass http://control_api/api/status;
+            add_header Cache-Control "no-store";
+        }
+
+        location = /status {
+            proxy_pass http://control_api/status;
+        }
+
+        location = /robots.txt {
+            return 200 "User-agent: *\nDisallow: /\n";
+            add_header Content-Type text/plain;
+        }
+
+        location = /favicon.ico {
+            return 204;
+        }
+
+        # --- desktop at /: noVNC with auto-connect and auto-reconnect ---------
+        location = / {
+            auth_basic "Cloud Desktop";
+            auth_basic_user_file /etc/nginx/.htpasswd;
+            proxy_pass http://desktop_ws/vnc.html?autoconnect=1&resize=remote&reconnect=1&quality=5&compression=2;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+        }
+
+        location / {
+            auth_basic "Cloud Desktop";
+            auth_basic_user_file /etc/nginx/.htpasswd;
+
+            proxy_pass http://desktop_ws;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            # A remote desktop is a long-lived connection: never time it out.
+            proxy_buffering off;
+            proxy_request_buffering off;
+            proxy_read_timeout 7d;
+            proxy_send_timeout 7d;
+        }
+    }
+}

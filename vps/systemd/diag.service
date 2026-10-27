@@ -1,0 +1,13 @@
+[Unit]
+Description=Print the live system state to the console
+Documentation=file:///usr/local/bin/diag.sh
+After=cloud-desktop.target
+Wants=cloud-desktop.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/diag.sh
+
+[Install]
+WantedBy=multi-user.target

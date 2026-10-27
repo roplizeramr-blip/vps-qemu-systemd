@@ -1,0 +1,10 @@
+# Build context: keep the image small and never ship secrets.
+.git
+.gitignore
+.gitattributes
+.env
+.env.*
+*.env
+!*.env.example
+README.md
+docs/

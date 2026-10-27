@@ -1,0 +1,17 @@
+[Unit]
+Description=Cloud desktop status page and control API
+Documentation=file:///opt/desktop/web/index.html
+After=network-online.target vnc.service
+Wants=network-online.target vnc.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/cloud-desktop/desktop.env
+Environment=HOME=/root
+ExecStart=/usr/bin/python3 /usr/local/bin/control-server.py
+Restart=always
+RestartSec=2
+KillMode=control-group
+
+[Install]
+WantedBy=cloud-desktop.target

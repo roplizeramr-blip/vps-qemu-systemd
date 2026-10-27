@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=System Dashboard
+Name[ar]=لوحة النظام
+Comment=Live CPU, memory, swap and service status
+Comment[ar]=حالة المعالج والذاكرة والسواب والخدمات
+Exec=xfce4-terminal --hold --title="System Dashboard" -e /usr/local/bin/system-status.sh
+Icon=utilities-system-monitor
+Terminal=false
+Categories=System;
+StartupNotify=true

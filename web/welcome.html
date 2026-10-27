@@ -1,0 +1,115 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome — Debian Cloud Desktop</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; padding: 40px 22px 56px;
+      font-family: "Segoe UI", "DejaVu Sans", system-ui, sans-serif;
+      color: #e6edf3; background: #0b0f14; min-height: 100vh;
+    }
+    main { max-width: 880px; margin: 0 auto; }
+    h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -.03em; margin: 0 0 10px; }
+    .lead { color: #8b9dae; font-size: 16px; line-height: 1.65; margin: 0 0 24px; max-width: 72ch; }
+    .tags { margin-bottom: 22px; }
+    .tag { display: inline-block; margin: 0 6px 8px 0; padding: 4px 9px; border-radius: 999px;
+      border: 1px solid #1e2936; color: #a9bccd; font-size: 11px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+    .card { border: 1px solid #1e2936; border-radius: 12px; background: #111820; padding: 18px; }
+    .card h2 { margin: 0 0 8px; font-size: 14px; color: #5eead4; font-weight: 600; }
+    .card p, .card li { color: #9fb0c0; line-height: 1.65; font-size: 13px; }
+    .card ul { margin: 0; padding-left: 17px; }
+    code, pre { font-family: ui-monospace, "DejaVu Sans Mono", Consolas, monospace; }
+    code { padding: 1px 5px; border-radius: 5px; background: #1a2430; color: #d7e4ef; }
+    pre { padding: 12px 14px; border-radius: 8px; background: #0d141b; color: #cfe0ee;
+      overflow-x: auto; line-height: 1.55; font-size: 12px; border: 1px solid #1a2430; }
+    .note { border-left: 2px solid #fbbf24; padding-left: 12px; color: #fcd97a; }
+    footer { margin-top: 28px; color: #5b6b7c; font-size: 11px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Welcome to your Debian desktop</h1>
+  <p class="lead">
+    A real XFCE X11 session served by TigerVNC and rendered by noVNC. Chrome, a terminal, the file
+    manager and a systemd-compatible service layer are installed. Use it like a
+    normal Debian workstation.
+  </p>
+
+  <div class="tags">
+    <span class="tag">Debian 13</span>
+    <span class="tag">XFCE</span>
+    <span class="tag">Google Chrome</span>
+    <span class="tag">noVNC</span>
+    <span class="tag">Supervisor</span>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Quick start</h2>
+      <ul>
+        <li>Launch <b>Google Chrome</b> to browse the web.</li>
+        <li>Open <b>Terminal</b> for a shell.</li>
+        <li>Use <b>System Dashboard</b> to inspect the service layer.</li>
+        <li>Change the Linux password with <code>sudo passwd desktop</code>.</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Access</h2>
+      <p>
+        The desktop is served on the app's public HTTPS URL and always asks for
+        the desktop credentials. The VNC user is <code>admin</code>; its password
+        is the deployment's <code>VNC_PW</code>.
+      </p>
+      <p>
+        Linux user: <code>desktop</code> (member of <code>sudo</code>). Set or
+        change its password from a terminal with
+        <code>sudo passwd desktop</code>.
+      </p>
+    </section>
+    <section class="card">
+      <h2>Service layer</h2>
+      <p>Supervisor is PID 1 in this container, and it runs exactly what the desktop needs:</p>
+      <pre>supervisorctl status
+supervisorctl restart xfce</pre>
+      <p class="note">
+        Only seven processes run: <code>dbus</code>, <code>vnc</code> (TigerVNC),
+        <code>websockify</code>, <code>xfce</code>, <code>nginx</code>,
+        <code>control</code> and <code>earlyoom</code>. There is no systemd
+        facade here — real systemd runs on the VPS path.
+      </p>
+    </section>
+    <section class="card">
+      <h2>Useful commands</h2>
+      <pre>sudo apt update
+google-chrome --version
+supervisorctl status vnc
+supervisorctl restart xfce
+df -h
+free -h</pre>
+    </section>
+    <section class="card">
+      <h2>Files and storage</h2>
+      <p>
+        Your home directory is <code>/home/desktop</code>. Files live inside the
+        container and may be lost if the app is redeployed or deleted. Download
+        important files to your own computer.
+      </p>
+    </section>
+    <section class="card">
+      <h2>Security</h2>
+      <p>
+        Use a strong <code>VNC_PW</code>, keep the app URL private, and avoid
+        storing secrets in the desktop. The public endpoint is protected by
+        HTTPS and HTTP Basic Auth.
+      </p>
+    </section>
+  </div>
+
+  <footer>Debian Cloud Desktop · Supervisor, XFCE, Google Chrome, TigerVNC + noVNC.</footer>
+</main>
+</body>
+</html>

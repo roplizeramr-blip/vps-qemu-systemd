@@ -1,0 +1,15 @@
+[Unit]
+Description=Inject cloud-desktop config into the VM from the kernel cmdline
+Documentation=file:///usr/local/bin/guest-init.sh
+After=local-fs.target
+Before=cloud-desktop.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/guest-init.sh
+TimeoutStartSec=90
+
+[Install]
+WantedBy=multi-user.target
